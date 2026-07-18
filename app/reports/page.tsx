@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo, Fragment } from "react"
-import { motion, AnimatePresence } from "motion/react"
 import { Filter, ChevronDown, FileText, ShieldCheck, Globe, SearchX, RotateCcw, Plus, Pencil, Trash2, MoreVertical } from "lucide-react"
 import Link from "next/link"
 import { useReports, Report } from "@/lib/reports-context"
@@ -22,18 +21,16 @@ const SORT_OPTIONS = [
 
 function Pill({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) {
   return (
-    <motion.button
+    <button
       onClick={onClick}
-      className={`px-3.5 py-2 rounded-lg text-sm border transition-colors ${
+      className={`px-3.5 py-2 rounded-lg text-sm border transition-colors active-scale-sm ${
         active
           ? "text-emerald-400 border-emerald-500/40 bg-emerald-500/10 font-semibold"
           : "text-muted-foreground border-border bg-secondary/50 hover:text-foreground"
       }`}
-      whileTap={{ scale: 0.96 }}
-      transition={{ type: "spring", stiffness: 500, damping: 25 }}
     >
       {label}
-    </motion.button>
+    </button>
   )
 }
 
@@ -41,14 +38,12 @@ export default function ReportsPage() {
   const { reports, addReport, updateReport, deleteReport } = useReports()
   const { isAdmin } = useAdmin()
 
-  // UI state
   const [sidebarOpen, setSidebarOpen] = useState(false)
   const [formOpen, setFormOpen] = useState(false)
   const [editingReport, setEditingReport] = useState<Report | null>(null)
   const [deleteConfirm, setDeleteConfirm] = useState<string | null>(null)
   const [menuOpen, setMenuOpen] = useState<string | null>(null)
 
-  // Filters
   const [sortBy, setSortBy] = useState("newest")
   const [filterType, setFilterType] = useState("all")
   const [filterPlatform, setFilterPlatform] = useState<string[]>([])
@@ -71,15 +66,11 @@ export default function ReportsPage() {
 
   const filtered = useMemo(() => {
     let result = [...reports]
-
-    // Apply filters
     if (filterType !== "all") result = result.filter((r) => r.type === filterType)
     if (filterPlatform.length) result = result.filter((r) => filterPlatform.includes(r.platform))
     if (filterKeySystem !== "all") result = result.filter((r) => r.keySystem === filterKeySystem)
     if (filterDetection !== "all") result = result.filter((r) => r.detection === filterDetection)
     if (filterPricing !== "all") result = result.filter((r) => r.pricing === filterPricing)
-
-    // Apply sort
     switch (sortBy) {
       case "newest": result.sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime()); break
       case "oldest": result.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime()); break
@@ -88,7 +79,6 @@ export default function ReportsPage() {
       case "name-az": result.sort((a, b) => a.name.localeCompare(b.name)); break
       case "name-za": result.sort((a, b) => b.name.localeCompare(a.name)); break
     }
-
     return result
   }, [reports, sortBy, filterType, filterPlatform, filterKeySystem, filterDetection, filterPricing])
 
@@ -124,7 +114,6 @@ export default function ReportsPage() {
   return (
     <div className={`flex min-h-[calc(100vh-73px)] transition-[margin] duration-300 ${sidebarOpen ? "mr-[360px]" : ""}`}>
       <div className="flex-1 p-8 max-w-[1280px] mx-auto min-w-0">
-        {/* Header */}
         <Reveal>
           <div className="flex items-start justify-between gap-5 mb-6">
             <div>
@@ -133,38 +122,28 @@ export default function ReportsPage() {
             </div>
             <div className="flex items-center gap-3">
               {isAdmin && (
-                <motion.button
+                <button
                   onClick={() => { setEditingReport(null); setFormOpen(true) }}
-                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold"
-                  whileHover={{ scale: 1.03 }}
-                  whileTap={{ scale: 0.97 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 17 }}
+                  className="flex items-center gap-2 px-4 py-2.5 rounded-lg bg-primary text-primary-foreground text-sm font-semibold hover:scale-[1.03] active:scale-[0.97] transition-transform"
                 >
                   <Plus className="w-4 h-4" /> New Report
-                </motion.button>
+                </button>
               )}
-              <motion.button
+              <button
                 onClick={() => setSidebarOpen(!sidebarOpen)}
-                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors ${
+                className={`flex items-center gap-2.5 px-4 py-2.5 rounded-lg border text-sm font-medium transition-colors active-scale-sm ${
                   sidebarOpen
                     ? "text-emerald-400 border-emerald-500/30 bg-emerald-500/10"
                     : "text-foreground/80 border-border bg-card hover:bg-secondary"
                 }`}
-                whileTap={{ scale: 0.97 }}
               >
                 <Filter className="w-4 h-4" /> Filters
-                <motion.div
-                  animate={{ rotate: sidebarOpen ? 180 : 0 }}
-                  transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-                >
-                  <ChevronDown className="w-3.5 h-3.5" />
-                </motion.div>
-              </motion.button>
+                <ChevronDown className={`w-3.5 h-3.5 transition-transform duration-250 ${sidebarOpen ? "rotate-180" : ""}`} />
+              </button>
             </div>
           </div>
         </Reveal>
 
-        {/* Stats */}
         <StaggerContainer className="grid grid-cols-3 gap-4 mb-6">
           {[
             { icon: FileText, label: "Total Reports", value: filtered.length, color: undefined, extra: (
@@ -184,7 +163,6 @@ export default function ReportsPage() {
           ))}
         </StaggerContainer>
 
-        {/* Table */}
         <div className="bg-card border border-border rounded-xl overflow-hidden">
           <table className="w-full">
             <thead>
@@ -207,30 +185,22 @@ export default function ReportsPage() {
                   </td>
                 </tr>
               ) : (
-                filtered.map((r, i) => (
+                filtered.map((r) => (
                   <Fragment key={r.id}>
-                    <motion.tr
-                      className="border-b border-border/40 hover:bg-white/[0.02] transition-colors"
-                      initial={{ opacity: 0, y: 8 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.35, delay: i * 0.035, ease: [0.22, 1, 0.36, 1] }}
-                    >
+                    <tr className="border-b border-border/40 hover:bg-white/[0.02] transition-colors">
                       <td className="px-5 py-3">
                         <div className="flex items-center gap-3.5">
-                          <motion.div
+                          <div
                             className={`w-[66px] h-[44px] rounded-lg flex items-center justify-center text-white font-bold text-[11px] tracking-wide overflow-hidden ${r.thumbnailUrl ? "" : r.bg}`}
-                            layoutId={`report-thumb-${r.id}`}
                           >
                             {r.thumbnailUrl ? (
                               <img src={r.thumbnailUrl} alt={r.name} className="w-full h-full object-cover" />
                             ) : (
                               <span className="text-center leading-tight drop-shadow-md">{r.name.toUpperCase()}</span>
                             )}
-                          </motion.div>
+                          </div>
                           <div>
-                            <motion.div className="font-semibold text-sm" layoutId={`report-name-${r.id}`}>
-                              {r.name}
-                            </motion.div>
+                            <div className="font-semibold text-sm">{r.name}</div>
                             <div className="text-xs text-muted-foreground/60">
                               {r.date} • {r.time} • {r.ver}
                             </div>
@@ -258,67 +228,51 @@ export default function ReportsPage() {
                               >
                                 <MoreVertical className="w-4 h-4" />
                               </button>
-                              <AnimatePresence>
-                                {menuOpen === r.id && (
-                                  <motion.div
-                                    className="absolute right-0 top-full mt-1 w-36 bg-card border border-border rounded-lg shadow-xl z-50 overflow-hidden"
-                                    initial={{ opacity: 0, scale: 0.95, y: -4 }}
-                                    animate={{ opacity: 1, scale: 1, y: 0 }}
-                                    exit={{ opacity: 0, scale: 0.95, y: -4 }}
-                                    transition={{ duration: 0.15, ease: [0.22, 1, 0.36, 1] }}
+                              {menuOpen === r.id && (
+                                <div className="absolute right-0 top-full mt-1 w-36 bg-card border border-border rounded-lg shadow-xl z-50 overflow-hidden animate-scale-in">
+                                  <button
+                                    onClick={() => { handleEdit(r); setMenuOpen(null) }}
+                                    className="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
                                   >
-                                    <button
-                                      onClick={() => { handleEdit(r); setMenuOpen(null) }}
-                                      className="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors"
-                                    >
-                                      <Pencil className="w-3.5 h-3.5" /> Edit
-                                    </button>
-                                    <button
-                                      onClick={() => { setDeleteConfirm(r.id); setMenuOpen(null) }}
-                                      className="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
-                                    >
-                                      <Trash2 className="w-3.5 h-3.5" /> Delete
-                                    </button>
-                                  </motion.div>
-                                )}
-                              </AnimatePresence>
+                                    <Pencil className="w-3.5 h-3.5" /> Edit
+                                  </button>
+                                  <button
+                                    onClick={() => { setDeleteConfirm(r.id); setMenuOpen(null) }}
+                                    className="w-full flex items-center gap-2 px-3 py-2.5 text-sm text-red-400 hover:text-red-300 hover:bg-red-500/10 transition-colors"
+                                  >
+                                    <Trash2 className="w-3.5 h-3.5" /> Delete
+                                  </button>
+                                </div>
+                              )}
                             </div>
                           )}
                         </div>
                       </td>
-                    </motion.tr>
+                    </tr>
                     {deleteConfirm === r.id && (
-                      <motion.tr
-                        className="bg-red-500/5"
-                        initial={{ opacity: 0, height: 0 }}
-                        animate={{ opacity: 1, height: "auto" }}
-                        exit={{ opacity: 0, height: 0 }}
-                        transition={{ duration: 0.2 }}
-                      >
+                      <tr className="bg-red-500/5 animate-fade-in-up">
                         <td colSpan={6} className="px-5 py-3">
                           <div className="flex items-center justify-between">
                             <span className="text-sm text-red-400">
                               Are you sure you want to delete <b>{r.name}</b>?
                             </span>
                             <div className="flex items-center gap-2">
-                              <motion.button
+                              <button
                                 onClick={() => handleDelete(r.id)}
-                                className="px-3 py-1.5 rounded-md text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-colors"
-                                whileTap={{ scale: 0.95 }}
+                                className="px-3 py-1.5 rounded-md text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-colors active-scale-sm"
                               >
                                 Yes, Delete
-                              </motion.button>
-                              <motion.button
+                              </button>
+                              <button
                                 onClick={() => setDeleteConfirm(null)}
-                                className="px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-muted-foreground border border-border hover:text-foreground transition-colors"
-                                whileTap={{ scale: 0.95 }}
+                                className="px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-muted-foreground border border-border hover:text-foreground transition-colors active-scale-sm"
                               >
                                 Cancel
-                              </motion.button>
+                              </button>
                             </div>
                           </div>
                         </td>
-                      </motion.tr>
+                      </tr>
                     )}
                   </Fragment>
                 ))
@@ -334,11 +288,8 @@ export default function ReportsPage() {
       </div>
 
       {/* Filter Sidebar */}
-      <motion.div
-        className="fixed top-[73px] right-0 bottom-0 w-[360px] bg-card border-l border-border overflow-y-auto z-[90] p-6"
-        initial={false}
-        animate={{ x: sidebarOpen ? 0 : 360 }}
-        transition={{ type: "spring", stiffness: 300, damping: 30 }}
+      <div
+        className={`fixed top-[73px] right-0 bottom-0 w-[360px] bg-card border-l border-border overflow-y-auto z-[90] p-6 sidebar-slide ${sidebarOpen ? "open" : ""}`}
       >
         <div className="flex items-center justify-between mb-5">
           <h2 className="text-base font-bold">Filters</h2>
@@ -410,14 +361,13 @@ export default function ReportsPage() {
           </div>
         </FilterSection>
 
-        <motion.button
+        <button
           onClick={() => setSidebarOpen(false)}
-          className="w-full mt-1 py-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-medium flex items-center justify-center gap-2 hover:bg-emerald-500/15 transition-colors"
-          whileTap={{ scale: 0.97 }}
+          className="w-full mt-1 py-3 rounded-lg border border-emerald-500/30 bg-emerald-500/10 text-emerald-400 text-sm font-medium flex items-center justify-center gap-2 hover:bg-emerald-500/15 transition-colors active-scale-sm"
         >
           Apply Filters <Filter className="w-3.5 h-3.5" />
-        </motion.button>
-      </motion.div>
+        </button>
+      </div>
 
       <ReportFormModal
         open={formOpen}
@@ -443,11 +393,7 @@ function StatCard({
   children?: React.ReactNode
 }) {
   return (
-    <motion.div
-      className="bg-card border border-border rounded-xl p-5"
-      whileHover={{ y: -2, boxShadow: "0 8px 24px rgba(0, 0, 0, 0.12)" }}
-      transition={{ type: "spring", stiffness: 400, damping: 25 }}
-    >
+    <div className="bg-card border border-border rounded-xl p-5 hover-lift">
       <div className="flex items-start justify-between mb-3.5">
         <span className="text-muted-foreground text-sm">{label}</span>
         <div className="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted-foreground">
@@ -456,7 +402,7 @@ function StatCard({
       </div>
       <div className={`text-4xl font-bold tracking-tight mb-3.5 ${color || ""}`}>{value}</div>
       {children}
-    </motion.div>
+    </div>
   )
 }
 

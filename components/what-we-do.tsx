@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "motion/react"
 import { ShieldCheck, LineChart, Code2 } from "lucide-react"
 import { GlareCard } from "@/components/ui/glare-card"
 import { StaggerContainer, StaggerItem } from "@/components/reveal"
@@ -37,19 +36,16 @@ export function WhatWeDo() {
         </StaggerItem>
       </StaggerContainer>
 
-      <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-3" staggerDelay={0.12}>
+      <StaggerContainer className="mt-12 grid gap-6 md:grid-cols-3">
         {features.map(({ icon: Icon, title, description }) => (
           <StaggerItem key={title}>
-            <motion.div
-              whileHover={{ y: -8, scale: 1.02 }}
-              transition={{ type: "spring", stiffness: 300, damping: 20 }}
-            >
+            <div className="hover-scale">
               <GlareCard className="flex flex-col items-center justify-center p-8 h-full">
                 <Icon className="h-12 w-12 text-white" aria-hidden />
                 <p className="text-white font-bold text-xl mt-4">{title}</p>
                 <p className="text-white/70 text-sm mt-2 text-center">{description}</p>
               </GlareCard>
-            </motion.div>
+            </div>
           </StaggerItem>
         ))}
       </StaggerContainer>

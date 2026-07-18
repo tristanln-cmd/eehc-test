@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useMemo } from "react"
-import { motion } from "motion/react"
 import { ArrowLeft } from "lucide-react"
 import { useRouter } from "next/navigation"
 import { useReports } from "@/lib/reports-context"
@@ -107,7 +106,6 @@ export default function BuilderPage() {
   const [copied, setCopied] = useState(false)
   const [saved, setSaved] = useState(false)
 
-  // Filtered lists
   const filteredSec = useMemo(() => {
     let items = secChecks.filter((i) => i.name.toLowerCase().includes(secSearch.toLowerCase()))
     if (secFilter !== "all") items = items.filter((i) => i.status === secFilter)
@@ -124,13 +122,11 @@ export default function BuilderPage() {
     return uiLibs.filter((i) => i.name.toLowerCase().includes(uiSearch.toLowerCase()))
   }, [uiLibs, uiSearch])
 
-  // Counts
   const secPassCount = secChecks.filter((i) => i.status === "pass").length
   const fnPresentCount = fnChecks.filter((i) => i.status === "pass").length
   const uiLoadedCount = uiLibs.filter((i) => i.status === "Loaded").length
   const stressPassCount = stressLevels.filter((i) => i.status === "pass").length
 
-  // Status setters
   const setSecStatus = (idx: number, status: "pass" | "skip" | "flag") => {
     setSecChecks((prev) => prev.map((c, i) => (i === idx ? { ...c, status } : c)))
   }
@@ -147,13 +143,11 @@ export default function BuilderPage() {
     setStressLevels((prev) => prev.map((s, i) => (i === idx ? { ...s, status } : s)))
   }
 
-  // Global setters
   const applyGlobalSec = (status: "pass" | "skip" | "flag") => setSecChecks((prev) => prev.map((c) => ({ ...c, status })))
   const applyGlobalFn = (status: "pass" | "skip" | "flag") => setFnChecks((prev) => prev.map((f) => ({ ...f, status })))
   const applyGlobalUI = (status: "Loaded" | "Not loaded") => setUILibs((prev) => prev.map((u) => ({ ...u, status })))
   const applyGlobalStress = (status: "pass" | "skip" | "flag") => setStressLevels((prev) => prev.map((s) => ({ ...s, status })))
 
-  // Actions
   const generateJSON = () => ({
     productName: latestReport?.name || "PLACEHOLDER_NAME",
     thumbnailUrl: latestReport?.thumbnailUrl || "",
@@ -233,13 +227,12 @@ export default function BuilderPage() {
 
   return (
     <div className="min-h-[calc(100vh-73px)] bg-background">
-      {/* Top bar */}
       <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <motion.button onClick={() => router.back()} className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground" whileTap={{ scale: 0.9 }}>
+            <button onClick={() => router.back()} className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground active-scale-lg">
               <ArrowLeft className="w-5 h-5" />
-            </motion.button>
+            </button>
             <div>
               <h1 className="text-xl font-bold">Report Builder</h1>
               <p className="text-sm text-muted-foreground">
@@ -260,10 +253,8 @@ export default function BuilderPage() {
 
       <div className={`max-w-7xl mx-auto px-6 py-8 grid gap-6 ${showPreview ? "grid-cols-[1fr_400px]" : "grid-cols-1"}`}>
         <div className="min-w-0 space-y-6">
-          {/* Fibonacci */}
           <FibonacciSection target={fibTarget} length={fibLength} onTargetChange={setFibTarget} onLengthChange={setFibLength} />
 
-          {/* Summary Stats */}
           <div className="grid grid-cols-4 gap-4">
             <SummaryCard label="Security" count={secPassCount} total={secChecks.length} />
             <SummaryCard label="Functions" count={fnPresentCount} total={fnChecks.length} />
@@ -271,7 +262,6 @@ export default function BuilderPage() {
             <SummaryCard label="Stress" count={stressPassCount} total={stressLevels.length} />
           </div>
 
-          {/* Security Checks */}
           <CheckList
             title="Security Checks"
             items={secChecks}
@@ -282,15 +272,10 @@ export default function BuilderPage() {
             onFilterChange={setSecFilter}
             onSetStatus={(idx, status) => setSecStatus(idx, status as "pass" | "skip" | "flag")}
             onSetAll={(status) => applyGlobalSec(status as "pass" | "skip" | "flag")}
-            statusOptions={[
-              { value: "pass", label: "All Pass" },
-              { value: "skip", label: "All Skip" },
-              { value: "flag", label: "All Flag" },
-            ]}
+            statusOptions={[{ value: "pass", label: "All Pass" }, { value: "skip", label: "All Skip" }, { value: "flag", label: "All Flag" }]}
             passCount={secPassCount}
           />
 
-          {/* Functions */}
           <CheckList
             title="Functions"
             items={fnChecks}
@@ -301,16 +286,11 @@ export default function BuilderPage() {
             onFilterChange={setFnFilter}
             onSetStatus={(idx, status) => setFnStatus(idx, status as "pass" | "skip" | "flag")}
             onSetAll={(status) => applyGlobalFn(status as "pass" | "skip" | "flag")}
-            statusOptions={[
-              { value: "pass", label: "All Present" },
-              { value: "skip", label: "All Missing" },
-              { value: "flag", label: "All Unstable" },
-            ]}
+            statusOptions={[{ value: "pass", label: "All Present" }, { value: "skip", label: "All Missing" }, { value: "flag", label: "All Unstable" }]}
             passCount={fnPresentCount}
             filterLabels={{ all: "All", pass: "Present", skip: "Skipped", flag: "Flagged" }}
           />
 
-          {/* UI Libraries */}
           <CheckList
             title="UI Libraries"
             items={uiLibs}
@@ -321,23 +301,13 @@ export default function BuilderPage() {
             onFilterChange={() => {}}
             onSetStatus={(idx, status) => setUIStatus(idx, status as "Loaded" | "Not loaded")}
             onSetAll={(status) => applyGlobalUI(status as "Loaded" | "Not loaded")}
-            statusOptions={[
-              { value: "Loaded", label: "All Loaded" },
-              { value: "Not loaded", label: "All Not Loaded" },
-            ]}
+            statusOptions={[{ value: "Loaded", label: "All Loaded" }, { value: "Not loaded", label: "All Not Loaded" }]}
             passCount={uiLoadedCount}
           />
 
-          {/* Stress Levels */}
-          <StressSection
-            levels={stressLevels}
-            passCount={stressPassCount}
-            onSetStatus={setStressStatus}
-            onSetAll={applyGlobalStress}
-          />
+          <StressSection levels={stressLevels} passCount={stressPassCount} onSetStatus={setStressStatus} onSetAll={applyGlobalStress} />
         </div>
 
-        {/* Live Preview Panel */}
         {showPreview && (
           <PreviewPanel
             reportName={latestReport?.name || "—"}
@@ -363,17 +333,8 @@ export default function BuilderPage() {
         )}
       </div>
 
-      {/* Floating Dock */}
-      <FloatingDock
-        showPreview={showPreview}
-        onTogglePreview={() => setShowPreview(!showPreview)}
-        onShowJson={() => setShowJSON(true)}
-        onCopy={copyJSON}
-        onDownload={downloadJSON}
-        copied={copied}
-      />
+      <FloatingDock showPreview={showPreview} onTogglePreview={() => setShowPreview(!showPreview)} onShowJson={() => setShowJSON(true)} onCopy={copyJSON} onDownload={downloadJSON} copied={copied} />
 
-      {/* JSON Modal */}
       {showJSON && (
         <JsonModal json={generateJSON()} onCopy={copyJSON} onDownload={downloadJSON} copied={copied} onClose={() => setShowJSON(false)} />
       )}
@@ -381,45 +342,22 @@ export default function BuilderPage() {
   )
 }
 
-function TopBarBtn({
-  onClick,
-  active,
-  saved,
-  children,
-}: {
-  onClick: () => void
-  active?: boolean
-  saved?: boolean
-  children: React.ReactNode
-}) {
+function TopBarBtn({ onClick, active, saved, children }: { onClick: () => void; active?: boolean; saved?: boolean; children: React.ReactNode }) {
   return (
-    <motion.button
+    <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors border ${
-        saved
-          ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
-          : active
-            ? "bg-primary/10 text-primary border-primary/30"
+      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors border active-scale-sm ${
+        saved ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
+          : active ? "bg-primary/10 text-primary border-primary/30"
             : "hover:bg-secondary text-muted-foreground hover:text-foreground border-border"
       }`}
-      whileTap={{ scale: 0.97 }}
     >
       {children}
-    </motion.button>
+    </button>
   )
 }
 
-function FibonacciSection({
-  target,
-  length,
-  onTargetChange,
-  onLengthChange,
-}: {
-  target: string
-  length: string
-  onTargetChange: (v: string) => void
-  onLengthChange: (v: string) => void
-}) {
+function FibonacciSection({ target, length, onTargetChange, onLengthChange }: { target: string; length: string; onTargetChange: (v: string) => void; onLengthChange: (v: string) => void }) {
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden">
       <div className="flex items-center justify-between p-5 border-b border-border">
@@ -435,27 +373,11 @@ function FibonacciSection({
   )
 }
 
-function InputField({
-  label,
-  value,
-  onChange,
-  placeholder,
-}: {
-  label: string
-  value: string
-  onChange: (v: string) => void
-  placeholder: string
-}) {
+function InputField({ label, value, onChange, placeholder }: { label: string; value: string; onChange: (v: string) => void; placeholder: string }) {
   return (
     <div>
       <label className="block text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">{label}</label>
-      <input
-        type="text"
-        value={value}
-        onChange={(e) => onChange(e.target.value)}
-        className="w-full bg-secondary border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary"
-        placeholder={placeholder}
-      />
+      <input type="text" value={value} onChange={(e) => onChange(e.target.value)} className="w-full bg-secondary border border-border rounded-lg px-3 py-2.5 text-sm text-foreground placeholder:text-muted-foreground focus:outline-none focus:ring-2 focus:ring-primary/30 focus:border-primary" placeholder={placeholder} />
     </div>
   )
 }
@@ -464,24 +386,12 @@ function SummaryCard({ label, count, total }: { label: string; count: number; to
   return (
     <div className="bg-card border border-border rounded-xl p-4">
       <div className="text-xs font-semibold text-muted-foreground mb-1 uppercase tracking-wider">{label}</div>
-      <div className="text-2xl font-bold text-emerald-400">
-        {count}/{total}
-      </div>
+      <div className="text-2xl font-bold text-emerald-400">{count}/{total}</div>
     </div>
   )
 }
 
-function StressSection({
-  levels,
-  passCount,
-  onSetStatus,
-  onSetAll,
-}: {
-  levels: { name: string; status: string }[]
-  passCount: number
-  onSetStatus: (idx: number, status: "pass" | "skip" | "flag") => void
-  onSetAll: (status: "pass" | "skip" | "flag") => void
-}) {
+function StressSection({ levels, passCount, onSetStatus, onSetAll }: { levels: { name: string; status: string }[]; passCount: number; onSetStatus: (idx: number, status: "pass" | "skip" | "flag") => void; onSetAll: (status: "pass" | "skip" | "flag") => void }) {
   return (
     <div className="bg-card border border-border rounded-xl overflow-hidden">
       <div className="flex items-center justify-between p-5 border-b border-border">
@@ -489,41 +399,21 @@ function StressSection({
         <span className="text-sm text-muted-foreground">{passCount}/{levels.length} passed</span>
       </div>
       <div className="p-5">
-        <select
-          onChange={(e) => {
-            if (e.target.value) onSetAll(e.target.value as "pass" | "skip" | "flag")
-            e.target.value = ""
-          }}
-          className="px-3 py-2 bg-secondary border border-border rounded-lg text-xs font-medium text-muted-foreground"
-        >
+        <select onChange={(e) => { if (e.target.value) onSetAll(e.target.value as "pass" | "skip" | "flag"); e.target.value = "" }} className="px-3 py-2 bg-secondary border border-border rounded-lg text-xs font-medium text-muted-foreground">
           <option value="">Set All...</option>
           <option value="pass">All Pass</option>
           <option value="skip">All Skip</option>
           <option value="flag">All Warning</option>
         </select>
-
         <div className="mt-4 space-y-2">
           {levels.map((item, i) => (
             <div key={item.name} className="flex items-center justify-between px-4 py-3 rounded-lg border border-border hover:bg-secondary/30 transition-colors">
               <span className="text-sm font-medium">{item.name}</span>
               <div className="flex gap-1.5">
-                  {(["pass", "skip", "flag"] as const).map((s) => (
-                    <motion.button
-                      key={s}
-                      onClick={() => onSetStatus(i, s)}
-                      className={`px-2.5 py-1 rounded text-xs font-medium transition-colors ${
-                        item.status === s
-                          ? s === "pass"
-                            ? "bg-emerald-500/20 text-emerald-400"
-                            : s === "flag"
-                              ? "bg-amber-500/20 text-amber-400"
-                              : "bg-secondary text-foreground"
-                          : "text-muted-foreground hover:text-foreground hover:bg-secondary"
-                      }`}
-                      whileTap={{ scale: 0.9 }}
-                    >
+                {(["pass", "skip", "flag"] as const).map((s) => (
+                  <button key={s} onClick={() => onSetStatus(i, s)} className={`px-2.5 py-1 rounded text-xs font-medium transition-colors active-scale-sm ${item.status === s ? s === "pass" ? "bg-emerald-500/20 text-emerald-400" : s === "flag" ? "bg-amber-500/20 text-amber-400" : "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-secondary"}`}>
                     {s === "pass" ? "Pass" : s === "skip" ? "Skip" : "Warning"}
-                    </motion.button>
+                  </button>
                 ))}
               </div>
             </div>

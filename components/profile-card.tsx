@@ -1,7 +1,6 @@
 "use client"
 
 import { useState } from "react"
-import { motion, AnimatePresence } from "motion/react"
 import { Globe, Mail } from "lucide-react"
 import { cn } from "@/lib/utils"
 import { useAdmin } from "@/lib/admin-context"
@@ -49,32 +48,23 @@ export function ProfileCard({
 
         <div className="absolute left-1/2 top-24 -translate-x-1/2 -translate-y-1/2">
           <div className="relative">
-          <motion.button
+          <button
             onClick={handleAvatarClick}
             className={cn(
-              "h-24 w-24 rounded-full border-4 border-zinc-900 object-cover shadow-md overflow-hidden transition-all",
+              "h-24 w-24 rounded-full border-4 border-zinc-900 object-cover shadow-md overflow-hidden transition-all active-scale-sm",
               !isAdmin && "cursor-pointer hover:ring-2 hover:ring-primary/50 hover:ring-offset-2 hover:ring-offset-zinc-900"
             )}
-            whileTap={{ scale: 0.95 }}
           >
               <img src={avatarUrl} alt={name} className="h-full w-full object-cover" />
-            </motion.button>
+            </button>
             <div className="absolute inset-0 rounded-full ring-2 ring-white/10 pointer-events-none" />
-            <AnimatePresence>
-              {isAdmin && (
-                <motion.div
-                  className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-zinc-900 flex items-center justify-center pointer-events-none"
-                  initial={{ scale: 0 }}
-                  animate={{ scale: 1 }}
-                  exit={{ scale: 0 }}
-                  transition={{ type: "spring", stiffness: 500, damping: 20 }}
-                >
-                  <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
-                    <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
-                  </svg>
-                </motion.div>
-              )}
-            </AnimatePresence>
+            {isAdmin && (
+              <div className="absolute -bottom-1 -right-1 w-6 h-6 rounded-full bg-emerald-500 border-2 border-zinc-900 flex items-center justify-center pointer-events-none animate-scale-in">
+                <svg className="w-3 h-3 text-white" fill="none" viewBox="0 0 24 24" stroke="currentColor" strokeWidth={3}>
+                  <path strokeLinecap="round" strokeLinejoin="round" d="M5 13l4 4L19 7" />
+                </svg>
+              </div>
+            )}
           </div>
         </div>
 
@@ -84,15 +74,12 @@ export function ProfileCard({
           <p className="mt-3 text-sm leading-relaxed text-zinc-300">{bio}</p>
 
           {isAdmin && (
-            <motion.button
+            <button
               onClick={logout}
-              className="mt-4 text-xs text-zinc-500 hover:text-red-400 transition-colors"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              whileTap={{ scale: 0.95 }}
+              className="mt-4 text-xs text-zinc-500 hover:text-red-400 transition-colors active-scale-sm"
             >
               Sign out
-            </motion.button>
+            </button>
           )}
 
           <div className="mt-5 flex justify-center gap-5">

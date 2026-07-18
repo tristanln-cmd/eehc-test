@@ -13,7 +13,7 @@ const items = [
 export function FeatureStrip() {
   return (
     <section className="mx-auto max-w-7xl px-6 pb-20">
-      <StaggerContainer className="grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:grid-cols-4" staggerDelay={0.08}>
+      <StaggerContainer className="grid gap-8 border-t border-border pt-12 sm:grid-cols-2 lg:grid-cols-4">
         {items.map(({ icon: Icon, title, description }) => (
           <StaggerItem key={title}>
             <div className="flex items-start gap-4">

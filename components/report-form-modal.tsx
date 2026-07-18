@@ -1,7 +1,6 @@
 "use client"
 
 import { useState, useEffect, useRef } from "react"
-import { motion, AnimatePresence } from "motion/react"
 import { X, Plus, Pencil, Upload } from "lucide-react"
 import { Report, getRandomGradient } from "@/lib/reports-context"
 import { useRouter } from "next/navigation"
@@ -21,7 +20,6 @@ const pricings = ["free", "paid"]
 export function ReportFormModal({ open, onClose, onSave, editReport }: ReportFormModalProps) {
   const router = useRouter()
 
-  // All fields
   const [name, setName] = useState("")
   const [thumbnailUrl, setThumbnailUrl] = useState("")
   const [thumbnailFile, setThumbnailFile] = useState<File | null>(null)
@@ -144,32 +142,19 @@ export function ReportFormModal({ open, onClose, onSave, editReport }: ReportFor
 
   const Pill = ({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => (
     <button type="button" onClick={onClick}
-      className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors ${active ? "text-emerald-400 border-emerald-500/40 bg-emerald-500/10" : "text-muted-foreground border-border bg-secondary/50 hover:text-foreground"}`}>
+      className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors active-scale-sm ${active ? "text-emerald-400 border-emerald-500/40 bg-emerald-500/10" : "text-muted-foreground border-border bg-secondary/50 hover:text-foreground"}`}>
       {label}
     </button>
   )
 
   return (
-    <AnimatePresence>
-      {open && (
-        <div className="fixed inset-0 z-[200] flex items-center justify-center">
-          <motion.div
-            className="absolute inset-0 bg-black/60 backdrop-blur-md"
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            transition={{ duration: 0.2 }}
-            onClick={onClose}
-          />
+    <div className="fixed inset-0 z-[200] flex items-center justify-center">
+      <div
+        className="absolute inset-0 bg-black/60 backdrop-blur-md modal-backdrop open"
+        onClick={onClose}
+      />
 
-          <motion.div
-            className="relative w-full max-w-lg mx-4 bg-card border border-border rounded-2xl shadow-2xl max-h-[85vh] overflow-y-auto"
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
-            animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
-            transition={{ type: "spring", stiffness: 400, damping: 25 }}
-          >
-        {/* Header */}
+      <div className="relative w-full max-w-lg mx-4 bg-card border border-border rounded-2xl shadow-2xl max-h-[85vh] overflow-y-auto modal-panel open">
         <div className="flex items-center justify-between p-6 pb-0">
           <div className="flex items-center gap-3">
             <div className="w-10 h-10 rounded-xl bg-primary/10 flex items-center justify-center">
@@ -289,17 +274,15 @@ export function ReportFormModal({ open, onClose, onSave, editReport }: ReportFor
           </div>
 
           <div className="flex gap-3 pt-2">
-            <motion.button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors" whileTap={{ scale: 0.97 }}>
+            <button type="button" onClick={onClose} className="flex-1 py-2.5 rounded-lg border border-border text-sm font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors active-scale-sm">
               Cancel
-            </motion.button>
-            <motion.button type="submit" className="flex-1 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm" whileHover={{ scale: 1.02 }} whileTap={{ scale: 0.98 }} transition={{ type: "spring", stiffness: 400, damping: 17 }}>
+            </button>
+            <button type="submit" className="flex-1 py-2.5 rounded-lg bg-primary text-primary-foreground font-semibold text-sm hover:scale-[1.02] active:scale-[0.98] transition-transform">
               {isEditing ? "Update Report" : "Create Report"}
-            </motion.button>
+            </button>
           </div>
         </form>
-          </motion.div>
-        </div>
-      )}
-    </AnimatePresence>
+      </div>
+    </div>
   )
 }

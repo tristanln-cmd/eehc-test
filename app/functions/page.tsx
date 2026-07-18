@@ -1,6 +1,5 @@
 "use client"
 
-import { motion } from "motion/react"
 import {
   FolderOpen,
   Code2,
@@ -20,8 +19,7 @@ import { Reveal } from "@/components/reveal"
 const libraries = [
   {
     name: "Closures",
-    description:
-      "Inspection, modification, and creation of Luau closures — one of the most powerful tools for hooking functions and modifying game logic.",
+    description: "Inspection, modification, and creation of Luau closures — one of the most powerful tools for hooking functions and modifying game logic.",
     icon: Code2,
     color: "text-blue-400",
     bg: "bg-blue-500/10",
@@ -43,8 +41,7 @@ const libraries = [
   },
   {
     name: "Debug",
-    description:
-      "Powerful tools for inspecting and modifying Luau functions at a bytecode level — constants, upvalues, stack frames, and protos.",
+    description: "Powerful tools for inspecting and modifying Luau functions at a bytecode level — constants, upvalues, stack frames, and protos.",
     icon: Bug,
     color: "text-red-400",
     bg: "bg-red-500/10",
@@ -65,8 +62,7 @@ const libraries = [
   },
   {
     name: "Filesystem",
-    description:
-      "Access to the executor's virtual file system — reading, writing, creating, and deleting files and folders.",
+    description: "Access to the executor's virtual file system — reading, writing, creating, and deleting files and folders.",
     icon: FolderOpen,
     color: "text-amber-400",
     bg: "bg-amber-500/10",
@@ -88,8 +84,7 @@ const libraries = [
   },
   {
     name: "Instances",
-    description:
-      "Direct access to and manipulation of Instance objects — listing, referencing, and firing Roblox-native interactions.",
+    description: "Direct access to and manipulation of Instance objects — listing, referencing, and firing Roblox-native interactions.",
     icon: Box,
     color: "text-purple-400",
     bg: "bg-purple-500/10",
@@ -109,8 +104,7 @@ const libraries = [
   },
   {
     name: "Signals",
-    description:
-      "Inspecting and manipulating RBXScriptSignal and RBXScriptConnection objects.",
+    description: "Inspecting and manipulating RBXScriptSignal and RBXScriptConnection objects.",
     icon: Link2,
     color: "text-green-400",
     bg: "bg-green-500/10",
@@ -124,8 +118,7 @@ const libraries = [
   },
   {
     name: "Scripts",
-    description:
-      "Inspect and interact with script objects — bytecode analysis, closure retrieval, environment access, and script simulation.",
+    description: "Inspect and interact with script objects — bytecode analysis, closure retrieval, environment access, and script simulation.",
     icon: FileText,
     color: "text-cyan-400",
     bg: "bg-cyan-500/10",
@@ -145,8 +138,7 @@ const libraries = [
   },
   {
     name: "Metatable",
-    description:
-      "Advanced interaction with metatables — direct access to core metamethods and internal table behaviours.",
+    description: "Advanced interaction with metatables — direct access to core metamethods and internal table behaviours.",
     icon: Braces,
     color: "text-orange-400",
     bg: "bg-orange-500/10",
@@ -162,8 +154,7 @@ const libraries = [
   },
   {
     name: "Reflection",
-    description:
-      "Access hidden or non-scriptable properties of Instances and internal execution context.",
+    description: "Access hidden or non-scriptable properties of Instances and internal execution context.",
     icon: Shield,
     color: "text-pink-400",
     bg: "bg-pink-500/10",
@@ -172,7 +163,7 @@ const libraries = [
     functions: [
       { name: "gethiddenproperty", sig: "gethiddenproperty(instance, name) → value, bool", desc: "Retrieve a hidden or non-scriptable property from an Instance." },
       { name: "sethiddenproperty", sig: "sethiddenproperty(instance, name, value) → bool", desc: "Assign a value to a hidden or non-scriptable property of an Instance." },
-      { name: "isscriptable", sig: "isscriptable(instance, property) → boolean?", desc: "Check whether a property of an Instance is scriptable." },
+      { name: "isscriptable", sig: "isscriptable(instance, property) → boolean?", desc: "Check whether a property of an instance is scriptable." },
       { name: "setscriptable", sig: "setscriptable(instance, name, state) → boolean?", desc: "Toggle the scriptability of a hidden or non-scriptable property on an Instance." },
       { name: "getthreadidentity", sig: "getthreadidentity() → number", desc: "Retrieve the thread's identity of the running Luau thread." },
       { name: "setthreadidentity", sig: "setthreadidentity(id)", desc: "Set the current Luau thread identity and capabilities." },
@@ -180,8 +171,7 @@ const libraries = [
   },
   {
     name: "Encoding",
-    description:
-      "Binary transformation operations — Base64 and LZ4 encoding, decoding, compression, and decompression.",
+    description: "Binary transformation operations — Base64 and LZ4 encoding, decoding, compression, and decompression.",
     icon: Binary,
     color: "text-indigo-400",
     bg: "bg-indigo-500/10",
@@ -189,15 +179,14 @@ const libraries = [
     link: "https://docs.sunc.su/Encoding",
     functions: [
       { name: "base64encode", sig: "base64encode(data) → string", desc: "Encode a string with Base64 encoding." },
-      { name: "base64decode", sig: "base64decode(data) → string", desc: "Decode a Base64-encoded string back into its original form." },
+      { name: "base64decode", sig: "base64decode(data) → string", desc: "Decode a Base64-encoded string back to its original form." },
       { name: "lz4compress", sig: "lz4compress(data) → string", desc: "Compress a string with the LZ4 compression algorithm." },
       { name: "lz4decompress", sig: "lz4decompress(data) → string", desc: "Decompress a string that was encoded using LZ4 back to regular data." },
     ],
   },
   {
     name: "Environment",
-    description:
-      "Access and inspection of the executor and Roblox environments — global tables, registry, and garbage collector.",
+    description: "Access and inspection of the executor and Roblox environments — global tables, registry, and garbage collector.",
     icon: Globe,
     color: "text-teal-400",
     bg: "bg-teal-500/10",
@@ -213,8 +202,7 @@ const libraries = [
   },
   {
     name: "Drawing",
-    description:
-      "Client-only 2D rendering primitives — creating and manipulating graphical objects on the screen.",
+    description: "Client-only 2D rendering primitives — creating and manipulating graphical objects on the screen.",
     icon: Palette,
     color: "text-violet-400",
     bg: "bg-violet-500/10",
@@ -229,8 +217,7 @@ const libraries = [
   },
   {
     name: "Miscellaneous",
-    description:
-      "Utility functions that don't belong to a specific category — executor identification and HTTP requests.",
+    description: "Utility functions that don't belong to a specific category — executor identification and HTTP requests.",
     icon: Wrench,
     color: "text-gray-400",
     bg: "bg-gray-500/10",
@@ -249,24 +236,17 @@ export default function FunctionsPage() {
   return (
     <main className="min-h-screen bg-background text-foreground">
       <div className="mx-auto max-w-5xl px-6 py-16">
-        {/* Header */}
         <Reveal>
           <div className="mb-12">
             <div className="mb-4 flex items-center gap-3">
               <div className="flex h-10 w-10 items-center justify-center rounded-xl bg-primary/10">
                 <Code2 className="h-5 w-5 text-primary" />
               </div>
-              <span className="text-sm font-medium text-muted-foreground">
-                sUNC Standard
-              </span>
+              <span className="text-sm font-medium text-muted-foreground">sUNC Standard</span>
             </div>
-            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
-              Executor Functions
-            </h1>
+            <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">Executor Functions</h1>
             <p className="mt-4 max-w-2xl text-lg text-muted-foreground">
-              Complete reference of {totalFunctions} executor functions tested
-              under the sUNC (senS&apos; Unified Naming Convention) standard.
-              Organized by library with signatures and descriptions.
+              Complete reference of {totalFunctions} executor functions tested under the sUNC (senS&apos; Unified Naming Convention) standard. Organized by library with signatures and descriptions.
             </p>
             <div className="mt-6 flex items-center gap-4 text-sm text-muted-foreground">
               <span className="inline-flex items-center gap-1.5">
@@ -277,118 +257,72 @@ export default function FunctionsPage() {
                 <span className="h-2 w-2 rounded-full bg-green-500" />
                 {totalFunctions} Functions
               </span>
-              <a
-                href="https://docs.sunc.su"
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-1.5 text-primary transition-colors hover:text-primary/80"
-              >
+              <a href="https://docs.sunc.su" target="_blank" rel="noopener noreferrer" className="inline-flex items-center gap-1.5 text-primary transition-colors hover:text-primary/80">
                 docs.sunc.su ↗
               </a>
             </div>
           </div>
         </Reveal>
 
-        {/* Library sections */}
         <div className="space-y-8">
           {libraries.map((lib, i) => {
             const Icon = lib.icon
             return (
               <Reveal key={lib.name} delay={i * 0.06}>
-                <motion.section
-                  className={`rounded-xl border ${lib.border} ${lib.bg} overflow-hidden`}
-                  whileHover={{ scale: 1.005 }}
-                  transition={{ type: "spring", stiffness: 400, damping: 30 }}
-                >
-                {/* Library header */}
-                <div className="flex items-center gap-4 px-6 py-5">
-                  <div
-                    className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${lib.bg} ${lib.color}`}
-                  >
-                    <Icon className="h-5 w-5" />
-                  </div>
-                  <div className="flex-1 min-w-0">
-                    <div className="flex items-center gap-3">
-                      <h2 className="text-lg font-bold">{lib.name}</h2>
-                      <span className="text-xs font-medium text-muted-foreground">
-                        {lib.functions.length} functions
-                      </span>
+                <section className={`rounded-xl border ${lib.border} ${lib.bg} overflow-hidden hover:scale-[1.005] transition-transform`}>
+                  <div className="flex items-center gap-4 px-6 py-5">
+                    <div className={`flex h-10 w-10 shrink-0 items-center justify-center rounded-lg ${lib.bg} ${lib.color}`}>
+                      <Icon className="h-5 w-5" />
                     </div>
-                    <p className="mt-0.5 text-sm text-muted-foreground">
-                      {lib.description}
-                    </p>
+                    <div className="flex-1 min-w-0">
+                      <div className="flex items-center gap-3">
+                        <h2 className="text-lg font-bold">{lib.name}</h2>
+                        <span className="text-xs font-medium text-muted-foreground">{lib.functions.length} functions</span>
+                      </div>
+                      <p className="mt-0.5 text-sm text-muted-foreground">{lib.description}</p>
+                    </div>
+                    <a href={lib.link} target="_blank" rel="noopener noreferrer" className="shrink-0 rounded-lg border border-border bg-background/50 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground">
+                      Docs ↗
+                    </a>
                   </div>
-                  <a
-                    href={lib.link}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="shrink-0 rounded-lg border border-border bg-background/50 px-3 py-1.5 text-xs font-medium text-muted-foreground transition-colors hover:border-muted-foreground hover:text-foreground"
-                  >
-                    Docs ↗
-                  </a>
-                </div>
 
-                {/* Function list */}
-                <div className="border-t border-border/50">
-                  <table className="w-full">
-                    <thead>
-                      <tr className="border-b border-border/50 bg-background/30">
-                        <th className="px-6 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                          Function
-                        </th>
-                        <th className="px-6 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden lg:table-cell">
-                          Signature
-                        </th>
-                        <th className="px-6 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">
-                          Description
-                        </th>
-                      </tr>
-                    </thead>
-                    <tbody className="divide-y divide-border/30">
-                      {lib.functions.map((fn) => (
-                        <tr
-                          key={fn.name}
-                          className="transition-colors hover:bg-background/50"
-                        >
-                          <td className="px-6 py-3">
-                            <code className="rounded bg-background/50 px-2 py-0.5 text-sm font-semibold">
-                              {fn.name}
-                            </code>
-                          </td>
-                          <td className="px-6 py-3 hidden lg:table-cell">
-                            <code className="text-xs text-muted-foreground">
-                              {fn.sig}
-                            </code>
-                          </td>
-                          <td className="px-6 py-3 text-sm text-muted-foreground">
-                            {fn.desc}
-                          </td>
+                  <div className="border-t border-border/50">
+                    <table className="w-full">
+                      <thead>
+                        <tr className="border-b border-border/50 bg-background/30">
+                          <th className="px-6 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Function</th>
+                          <th className="px-6 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground hidden lg:table-cell">Signature</th>
+                          <th className="px-6 py-2.5 text-left text-xs font-semibold uppercase tracking-wider text-muted-foreground">Description</th>
                         </tr>
-                      ))}
-                    </tbody>
-                  </table>
-                </div>
-              </motion.section>
+                      </thead>
+                      <tbody className="divide-y divide-border/30">
+                        {lib.functions.map((fn) => (
+                          <tr key={fn.name} className="transition-colors hover:bg-background/50">
+                            <td className="px-6 py-3">
+                              <code className="rounded bg-background/50 px-2 py-0.5 text-sm font-semibold">{fn.name}</code>
+                            </td>
+                            <td className="px-6 py-3 hidden lg:table-cell">
+                              <code className="text-xs text-muted-foreground">{fn.sig}</code>
+                            </td>
+                            <td className="px-6 py-3 text-sm text-muted-foreground">{fn.desc}</td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </section>
               </Reveal>
             )
           })}
         </div>
 
-        {/* Footer note */}
         <div className="mt-12 rounded-xl border border-border bg-card p-6 text-center">
           <p className="text-sm text-muted-foreground">
             Function data sourced from the{" "}
-            <a
-              href="https://docs.sunc.su"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-primary underline-offset-4 hover:underline"
-            >
+            <a href="https://docs.sunc.su" target="_blank" rel="noopener noreferrer" className="text-primary underline-offset-4 hover:underline">
               sUNC Documentation
             </a>{" "}
-            Metadata API. sUNC evolves over time — some functions may be
-            deprecated or added. Always refer to the official docs for the
-            latest information.
+            Metadata API. sUNC evolves over time — some functions may be deprecated or added. Always refer to the official docs for the latest information.
           </p>
         </div>
       </div>

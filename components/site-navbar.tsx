@@ -2,7 +2,6 @@
 
 import Link from "next/link"
 import { usePathname } from "next/navigation"
-import { motion } from "motion/react"
 
 const links = [
   { label: "Home", href: "/" },
@@ -14,12 +13,7 @@ export function SiteNavbar() {
   const pathname = usePathname()
 
   return (
-    <motion.header
-      className="border-b border-border/40"
-      initial={{ opacity: 0, y: -8 }}
-      animate={{ opacity: 1, y: 0 }}
-      transition={{ duration: 0.5, ease: [0.22, 1, 0.36, 1], delay: 0.1 }}
-    >
+    <header className="border-b border-border/40 animate-fade-in-up">
       <nav className="relative mx-auto flex max-w-7xl items-center px-6 py-5">
         <Link href="/" className="flex items-center gap-2 text-lg font-bold tracking-tight">
           <span>
@@ -42,11 +36,7 @@ export function SiteNavbar() {
                 >
                   {link.label}
                   {isActive && (
-                    <motion.div
-                      className="absolute inset-x-0 -bottom-[21px] h-0.5 bg-primary rounded-full"
-                      layoutId="nav-indicator"
-                      transition={{ type: "spring", stiffness: 380, damping: 30 }}
-                    />
+                    <div className="absolute inset-x-0 -bottom-[21px] h-0.5 bg-primary rounded-full" />
                   )}
                 </Link>
               </li>
@@ -54,6 +44,6 @@ export function SiteNavbar() {
           })}
         </ul>
       </nav>
-    </motion.header>
+    </header>
   )
 }

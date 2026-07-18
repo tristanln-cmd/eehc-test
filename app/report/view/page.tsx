@@ -1,11 +1,9 @@
 "use client"
 
 import { Suspense, useMemo, useState } from "react"
-import { motion, AnimatePresence } from "motion/react"
 import { ArrowLeft, LayoutGrid, Shield, Zap, Palette, Flame, Infinity } from "lucide-react"
 import { useRouter, useSearchParams } from "next/navigation"
 import { useReports } from "@/lib/reports-context"
-import { Reveal, StaggerContainer, StaggerItem } from "@/components/reveal"
 
 function ReportContent() {
   const router = useRouter()
@@ -76,13 +74,12 @@ function ReportContent() {
 
   return (
     <div className="min-h-[calc(100vh-73px)] bg-[#0a0a0c]">
-      {/* Top bar */}
       <div className="sticky top-0 z-20 bg-[#0a0a0c]/90 backdrop-blur-md border-b border-border">
         <div className="max-w-[1160px] mx-auto px-6 py-4 flex items-center justify-between">
           <div className="flex items-center gap-4">
-            <motion.button onClick={() => router.back()} className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground" whileTap={{ scale: 0.9 }}>
+            <button onClick={() => router.back()} className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground active-scale-lg">
               <ArrowLeft className="w-5 h-5" />
-            </motion.button>
+            </button>
             <div className="flex items-center gap-3">
               <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(52,199,123,0.8)]" />
               <span className="font-bold">ExecutorHealthCheck</span>
@@ -95,31 +92,22 @@ function ReportContent() {
         </div>
       </div>
 
-      {/* Report Header */}
       <div className="max-w-[1160px] mx-auto px-6 pt-10">
         <div className="text-xs font-mono uppercase tracking-[0.12em] text-muted-foreground mb-2">Diagnostic Report</div>
         <div className="flex items-center justify-between flex-wrap gap-4 mb-6">
           <div className="flex items-center gap-4">
             {report.thumbnailUrl && (
-              <motion.div
-                className="w-[88px] h-[88px] rounded-2xl overflow-hidden border border-white/12 shadow-[0_2px_10px_rgba(91,141,239,0.35)]"
-                layoutId={`report-thumb-${report.id}`}
-              >
+              <div className="w-[88px] h-[88px] rounded-2xl overflow-hidden border border-white/12 shadow-[0_2px_10px_rgba(91,141,239,0.35)]">
                 <img src={report.thumbnailUrl} alt={report.name} className="w-full h-full object-cover" />
-              </motion.div>
+              </div>
             )}
-            <motion.h1
-              className="text-[34px] font-extrabold tracking-tight"
-              style={{ fontFamily: "'Syne', sans-serif" }}
-              layoutId={`report-name-${report.id}`}
-            >
+            <h1 className="text-[34px] font-extrabold tracking-tight" style={{ fontFamily: "'Syne', sans-serif" }}>
               {report.name}
-            </motion.h1>
+            </h1>
           </div>
           <span className="text-muted-foreground font-medium text-lg">— health report</span>
         </div>
 
-        {/* Meta strip */}
         <div className="grid grid-cols-4 border border-border rounded-[10px] overflow-hidden mb-7">
           <div className="p-4 border-r border-border">
             <div className="text-[10.5px] font-mono uppercase tracking-[0.1em] text-muted-foreground mb-1">Timestamp</div>
@@ -139,30 +127,20 @@ function ReportContent() {
           </div>
         </div>
 
-        {/* Section nav */}
         <nav className="flex gap-1 flex-wrap border-b border-border mb-9">
           {sections.map(s => (
-            <motion.button key={s.id} onClick={() => setActiveSection(s.id)}
-              className={`flex items-center gap-1.5 text-[13px] font-semibold px-4 py-3 border-b-2 transition-colors ${activeSection === s.id ? "text-foreground border-primary" : "text-muted-foreground border-transparent hover:text-foreground"}`}
-              whileTap={{ scale: 0.97 }}
+            <button key={s.id} onClick={() => setActiveSection(s.id)}
+              className={`flex items-center gap-1.5 text-[13px] font-semibold px-4 py-3 border-b-2 transition-colors active-scale-sm ${activeSection === s.id ? "text-foreground border-primary" : "text-muted-foreground border-transparent hover:text-foreground"}`}
             >
               <s.icon className="w-3.5 h-3.5" />
               {s.label}
-            </motion.button>
+            </button>
           ))}
         </nav>
       </div>
 
-      {/* Main Content */}
       <main className="max-w-[1160px] mx-auto px-6 pb-20">
-        <AnimatePresence mode="wait">
-          <motion.div
-            key={activeSection}
-            initial={{ opacity: 0, y: 12 }}
-            animate={{ opacity: 1, y: 0 }}
-            exit={{ opacity: 0, y: -8 }}
-            transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] as number[] }}
-          >
+        <div key={activeSection}>
         {/* Overview */}
         {activeSection === "overview" && (
           <section>
@@ -206,7 +184,6 @@ function ReportContent() {
           </section>
         )}
 
-        {/* Security */}
         {activeSection === "security" && (
           <section>
             <h2 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
@@ -223,12 +200,10 @@ function ReportContent() {
                 </thead>
                 <tbody>
                   {secChecks.length === 0 ? (
-                    <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground text-sm">No security checks configured. Complete the builder to add checks.</td></tr>
+                    <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground text-sm">No security checks configured.</td></tr>
                   ) : secChecks.map((c, i) => (
                     <tr key={i}>
-                      <td className="px-5 py-3.5 border-b border-border/50 text-[13.5px] font-semibold">
-                        {c.name}
-                      </td>
+                      <td className="px-5 py-3.5 border-b border-border/50 text-[13.5px] font-semibold">{c.name}</td>
                       <td className="px-5 py-3.5 border-b border-border/50">{badge(c.status)}</td>
                       <td className="px-5 py-3.5 border-b border-border/50 text-[12.5px] text-muted-foreground">
                         {c.detail.length > 40 ? c.detail.slice(0, 38) + "…" : c.detail}
@@ -241,7 +216,6 @@ function ReportContent() {
           </section>
         )}
 
-        {/* Functions */}
         {activeSection === "functions" && (
           <section>
             <h2 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
@@ -272,12 +246,10 @@ function ReportContent() {
                 </thead>
                 <tbody>
                   {fnChecks.length === 0 ? (
-                    <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground text-sm">No functions configured. Complete the builder to add functions.</td></tr>
+                    <tr><td colSpan={3} className="px-5 py-8 text-center text-muted-foreground text-sm">No functions configured.</td></tr>
                   ) : fnChecks.map((f, i) => (
                     <tr key={i}>
-                      <td className="px-5 py-3.5 border-b border-border/50 text-[13.5px] font-semibold">
-                        {f.name}
-                      </td>
+                      <td className="px-5 py-3.5 border-b border-border/50 text-[13.5px] font-semibold">{f.name}</td>
                       <td className="px-5 py-3.5 border-b border-border/50">{badge(f.status)}</td>
                       <td className="px-5 py-3.5 border-b border-border/50 text-[12.5px] text-muted-foreground">
                         {f.detail.length > 40 ? f.detail.slice(0, 38) + "…" : f.detail}
@@ -290,7 +262,6 @@ function ReportContent() {
           </section>
         )}
 
-        {/* UI Libs */}
         {activeSection === "uilibs" && (
           <section>
             <h2 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
@@ -298,7 +269,7 @@ function ReportContent() {
             </h2>
             <div className="border border-border rounded-[10px] overflow-hidden">
               {uiLibs.length === 0 ? (
-                <div className="px-5 py-8 text-center text-muted-foreground text-sm">No UI libraries configured. Complete the builder to add UI libs.</div>
+                <div className="px-5 py-8 text-center text-muted-foreground text-sm">No UI libraries configured.</div>
               ) : uiLibs.map((u, i) => (
                 <div key={i} className="flex items-center justify-between px-5 py-3 border-b border-border/50 last:border-0 text-[13.5px]">
                   <span className="font-semibold">{u.name}</span>
@@ -319,7 +290,6 @@ function ReportContent() {
           </section>
         )}
 
-        {/* Stress */}
         {activeSection === "stress" && (
           <section>
             <h2 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
@@ -337,7 +307,7 @@ function ReportContent() {
             </div>
             <div className="border border-border rounded-[10px] overflow-hidden">
               {stressLevels.length === 0 ? (
-                <div className="px-5 py-8 text-center text-muted-foreground text-sm">No stress levels configured. Complete the builder to add stress levels.</div>
+                <div className="px-5 py-8 text-center text-muted-foreground text-sm">No stress levels configured.</div>
               ) : stressLevels.map((s, i) => (
                 <div key={i} className="flex items-center justify-between px-5 py-3 border-b border-border/50 last:border-0 text-[13.5px]">
                   <span>{s.name}</span>
@@ -348,7 +318,6 @@ function ReportContent() {
           </section>
         )}
 
-        {/* Fibonacci */}
         {activeSection === "fibonacci" && (
           <section>
             <h2 className="text-xl font-bold mb-5 flex items-center gap-2" style={{ fontFamily: "'Syne', sans-serif" }}>
@@ -365,12 +334,10 @@ function ReportContent() {
               </div>
             </div>
           </section>
-          )}
-        </motion.div>
-        </AnimatePresence>
+        )}
+        </div>
       </main>
 
-      {/* Footer */}
       <footer className="max-w-[1160px] mx-auto px-6 py-8 border-t border-border text-center text-[12px] text-muted-foreground font-mono">
         {report.name} — ExecutorHealthCheck report
       </footer>
