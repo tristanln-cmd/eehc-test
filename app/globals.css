@@ -146,6 +146,16 @@
   }
 }
 
+/* ─── Mobile base ─── */
+html, body {
+  overflow-x: hidden;
+  -webkit-tap-highlight-color: transparent;
+}
+
+input, select, textarea, button {
+  font-size: 16px;
+}
+
 /* ─── Page Transition ─── */
 @keyframes page-fade-in {
   from { opacity: 0; transform: translateY(8px); }

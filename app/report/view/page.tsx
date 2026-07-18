@@ -75,19 +75,19 @@ function ReportContent() {
   return (
     <div className="min-h-[calc(100vh-73px)] bg-[#0a0a0c]">
       <div className="sticky top-0 z-20 bg-[#0a0a0c]/90 backdrop-blur-md border-b border-border">
-        <div className="max-w-[1160px] mx-auto px-6 py-4 flex items-center justify-between">
-          <div className="flex items-center gap-4">
-            <button onClick={() => router.back()} className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground active-scale-lg">
+        <div className="max-w-[1160px] mx-auto px-4 sm:px-6 py-3 sm:py-4 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+            <button onClick={() => router.back()} className="p-2.5 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground active-scale-lg shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center">
               <ArrowLeft className="w-5 h-5" />
             </button>
-            <div className="flex items-center gap-3">
-              <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(52,199,123,0.8)]" />
-              <span className="font-bold">ExecutorHealthCheck</span>
+            <div className="flex items-center gap-2 sm:gap-3 min-w-0">
+              <div className="w-2 h-2 rounded-full bg-emerald-500 shadow-[0_0_8px_rgba(52,199,123,0.8)] shrink-0" />
+              <span className="font-bold text-sm sm:text-base truncate">ExecutorHealthCheck</span>
             </div>
           </div>
-          <div className="flex items-center gap-4 text-sm text-muted-foreground">
-            <button onClick={() => router.push("/")} className="hover:text-foreground transition-colors">Home</button>
-            <button onClick={() => router.push("/reports")} className="hover:text-foreground transition-colors">Reports</button>
+          <div className="flex items-center gap-2 sm:gap-4 text-sm text-muted-foreground shrink-0">
+            <button onClick={() => router.push("/")} className="px-2 py-2 rounded-lg hover:text-foreground transition-colors min-h-[44px]">Home</button>
+            <button onClick={() => router.push("/reports")} className="px-2 py-2 rounded-lg hover:text-foreground transition-colors min-h-[44px]">Reports</button>
           </div>
         </div>
       </div>
@@ -130,7 +130,7 @@ function ReportContent() {
         <nav className="flex gap-1 flex-wrap border-b border-border mb-9">
           {sections.map(s => (
             <button key={s.id} onClick={() => setActiveSection(s.id)}
-              className={`flex items-center gap-1.5 text-[13px] font-semibold px-4 py-3 border-b-2 transition-colors active-scale-sm ${activeSection === s.id ? "text-foreground border-primary" : "text-muted-foreground border-transparent hover:text-foreground"}`}
+              className={`flex items-center gap-1.5 text-[13px] font-semibold px-3 sm:px-4 py-3 min-h-[44px] border-b-2 transition-colors active-scale-sm ${activeSection === s.id ? "text-foreground border-primary" : "text-muted-foreground border-transparent hover:text-foreground"}`}
             >
               <s.icon className="w-3.5 h-3.5" />
               {s.label}

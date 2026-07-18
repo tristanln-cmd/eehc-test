@@ -50,7 +50,7 @@ export function SiteNavbar() {
 
         <button
           onClick={() => setOpen(!open)}
-          className="flex flex-col justify-center items-center w-8 h-8 gap-1.5 lg:hidden"
+          className="flex flex-col justify-center items-center w-11 h-11 gap-1.5 lg:hidden"
           aria-label="Toggle menu"
         >
           <span className={`block w-5 h-0.5 bg-foreground transition-transform duration-200 ${open ? "translate-y-2 rotate-45" : ""}`} />
@@ -67,7 +67,7 @@ export function SiteNavbar() {
               <li key={link.href}>
                 <Link
                   href={link.href}
-                  className={`block px-3 py-2.5 rounded-lg text-sm transition-colors ${
+                  className={`block px-3 py-3 rounded-lg text-sm transition-colors min-h-[44px] flex items-center ${
                     isActive
                       ? "bg-secondary text-foreground font-medium"
                       : "text-muted-foreground hover:bg-secondary hover:text-foreground"

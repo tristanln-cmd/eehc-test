@@ -23,7 +23,7 @@ function Pill({ label, active, onClick }: { label: string; active: boolean; onCl
   return (
     <button
       onClick={onClick}
-      className={`px-3.5 py-2 rounded-lg text-sm border transition-colors active-scale-sm ${
+      className={`px-3.5 py-2.5 rounded-lg text-sm border transition-colors active-scale-sm min-h-[44px] ${
         active
           ? "text-emerald-400 border-emerald-500/40 bg-emerald-500/10 font-semibold"
           : "text-muted-foreground border-border bg-secondary/50 hover:text-foreground"
@@ -224,7 +224,7 @@ export default function ReportsPage() {
                       <td className="px-4 sm:px-5 py-3 text-emerald-400 font-bold">{r.security}%</td>
                       <td className="px-4 sm:px-5 py-3">
                         <div className="flex items-center justify-end gap-2">
-                          <Link href={`/report/view?id=${r.id}`} className="px-3 py-1.5 rounded-md border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors">
+                          <Link href={`/report/view?id=${r.id}`} className="px-3 py-2 rounded-md border border-border text-xs font-medium text-muted-foreground hover:text-foreground hover:bg-secondary transition-colors min-h-[44px] inline-flex items-center">
                             View Report
                           </Link>
                           {isAdmin && (
@@ -266,13 +266,13 @@ export default function ReportsPage() {
                             <div className="flex items-center gap-2">
                               <button
                                 onClick={() => handleDelete(r.id)}
-                                className="px-3 py-1.5 rounded-md text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-colors active-scale-sm"
+                                className="px-3 py-2 rounded-md text-xs font-medium bg-red-500/10 text-red-400 border border-red-500/30 hover:bg-red-500/20 transition-colors active-scale-sm min-h-[44px]"
                               >
                                 Yes, Delete
                               </button>
                               <button
                                 onClick={() => setDeleteConfirm(null)}
-                                className="px-3 py-1.5 rounded-md text-xs font-medium bg-secondary text-muted-foreground border border-border hover:text-foreground transition-colors active-scale-sm"
+                                className="px-3 py-2 rounded-md text-xs font-medium bg-secondary text-muted-foreground border border-border hover:text-foreground transition-colors active-scale-sm min-h-[44px]"
                               >
                                 Cancel
                               </button>
@@ -294,6 +294,12 @@ export default function ReportsPage() {
           </div>
         </div>
       </div>
+
+      {/* Filter Sidebar Backdrop */}
+      <div
+        onClick={() => setSidebarOpen(false)}
+        className={`fixed inset-0 bg-black/50 z-[89] transition-opacity duration-300 ${sidebarOpen ? "opacity-100" : "opacity-0 pointer-events-none"}`}
+      />
 
       {/* Filter Sidebar */}
       <div

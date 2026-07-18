@@ -142,7 +142,7 @@ export function ReportFormModal({ open, onClose, onSave, editReport }: ReportFor
 
   const Pill = ({ label, active, onClick }: { label: string; active: boolean; onClick: () => void }) => (
     <button type="button" onClick={onClick}
-      className={`px-3 py-1.5 rounded-md text-xs font-medium border transition-colors active-scale-sm ${active ? "text-emerald-400 border-emerald-500/40 bg-emerald-500/10" : "text-muted-foreground border-border bg-secondary/50 hover:text-foreground"}`}>
+      className={`px-3 py-2 rounded-md text-xs font-medium border transition-colors active-scale-sm min-h-[44px] ${active ? "text-emerald-400 border-emerald-500/40 bg-emerald-500/10" : "text-muted-foreground border-border bg-secondary/50 hover:text-foreground"}`}>
       {label}
     </button>
   )
@@ -167,13 +167,13 @@ export function ReportFormModal({ open, onClose, onSave, editReport }: ReportFor
               </p>
             </div>
           </div>
-          <button onClick={onClose} className="text-muted-foreground hover:text-foreground transition-colors">
+          <button onClick={onClose} className="text-muted-foreground hover:text-foreground transition-colors p-2 min-w-[44px] min-h-[44px] flex items-center justify-center -mr-2">
             <X className="w-5 h-5" />
           </button>
         </div>
 
         <form onSubmit={handleSubmit} className="p-6 space-y-4">
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Executor Name</label>
               <input type="text" value={name} onChange={e => setName(e.target.value)} required autoFocus
@@ -209,7 +209,7 @@ export function ReportFormModal({ open, onClose, onSave, editReport }: ReportFor
               placeholder="2026-03-28 · 20:45" />
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-muted-foreground mb-1.5 uppercase tracking-wider">Version</label>
               <input type="text" value={ver} onChange={e => setVer(e.target.value)} required
@@ -239,7 +239,7 @@ export function ReportFormModal({ open, onClose, onSave, editReport }: ReportFor
             </div>
           </div>
 
-          <div className="grid grid-cols-2 gap-3">
+          <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
             <div>
               <label className="block text-xs font-semibold text-muted-foreground mb-2 uppercase tracking-wider">Key System</label>
               <div className="flex gap-2">

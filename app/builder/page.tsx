@@ -226,11 +226,11 @@ export default function BuilderPage() {
   }
 
   return (
-    <div className="min-h-[calc(100vh-73px)] bg-background">
+    <div className="min-h-[calc(100vh-73px)] bg-background pb-24">
       <div className="sticky top-0 z-20 bg-background/95 backdrop-blur-sm border-b border-border">
         <div className="max-w-7xl mx-auto px-4 sm:px-6 py-4 flex items-center justify-between gap-3">
           <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-            <button onClick={() => router.back()} className="p-2 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground active-scale-lg shrink-0">
+            <button onClick={() => router.back()} className="p-2.5 rounded-lg hover:bg-secondary transition-colors text-muted-foreground hover:text-foreground active-scale-lg shrink-0 min-w-[44px] min-h-[44px] flex items-center justify-center">
               <ArrowLeft className="w-5 h-5" />
             </button>
             <div className="min-w-0">
@@ -346,7 +346,7 @@ function TopBarBtn({ onClick, active, saved, children }: { onClick: () => void; 
   return (
     <button
       onClick={onClick}
-      className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm font-medium transition-colors border active-scale-sm ${
+      className={`flex items-center gap-2 px-3 py-2.5 rounded-lg text-sm font-medium transition-colors border active-scale-sm min-h-[44px] ${
         saved ? "bg-emerald-500/10 text-emerald-400 border-emerald-500/30"
           : active ? "bg-primary/10 text-primary border-primary/30"
             : "hover:bg-secondary text-muted-foreground hover:text-foreground border-border"
@@ -411,7 +411,7 @@ function StressSection({ levels, passCount, onSetStatus, onSetAll }: { levels: {
               <span className="text-sm font-medium">{item.name}</span>
               <div className="flex gap-1.5">
                 {(["pass", "skip", "flag"] as const).map((s) => (
-                  <button key={s} onClick={() => onSetStatus(i, s)} className={`px-2.5 py-1 rounded text-xs font-medium transition-colors active-scale-sm ${item.status === s ? s === "pass" ? "bg-emerald-500/20 text-emerald-400" : s === "flag" ? "bg-amber-500/20 text-amber-400" : "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-secondary"}`}>
+                  <button key={s} onClick={() => onSetStatus(i, s)} className={`px-2.5 py-1.5 rounded text-xs font-medium transition-colors active-scale-sm min-h-[36px] ${item.status === s ? s === "pass" ? "bg-emerald-500/20 text-emerald-400" : s === "flag" ? "bg-amber-500/20 text-amber-400" : "bg-secondary text-foreground" : "text-muted-foreground hover:text-foreground hover:bg-secondary"}`}>
                     {s === "pass" ? "Pass" : s === "skip" ? "Skip" : "Warning"}
                   </button>
                 ))}
