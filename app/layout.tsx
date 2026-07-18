@@ -4,7 +4,7 @@ import { Inter } from 'next/font/google'
 import { SiteNavbar } from '@/components/site-navbar'
 import { AdminProvider } from '@/lib/admin-context'
 import { ReportsProvider } from '@/lib/reports-context'
-import { MotionProvider } from '@/components/motion-provider'
+import { NavigationEvents } from '@/components/navigation-events'
 import './globals.css'
 
 const inter = Inter({ subsets: ['latin'] })
@@ -49,9 +49,8 @@ export default function RootLayout({
         <AdminProvider>
           <ReportsProvider>
             <SiteNavbar />
-            <MotionProvider>
-              {children}
-            </MotionProvider>
+            <NavigationEvents />
+            {children}
             {process.env.NODE_ENV === 'production' && <Analytics />}
           </ReportsProvider>
         </AdminProvider>
